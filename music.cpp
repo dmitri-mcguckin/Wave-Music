@@ -485,6 +485,7 @@ bool SongList::removeSong(int index)
 
 void SongList::writeLibrary(ofstream &outFile,char fileName[], char path[])
 {
+
     char opt = NULL;
     char temp[CAP];
     
