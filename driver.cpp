@@ -9,13 +9,14 @@ int main()
 	char fileName[CAP];
     	char option = NULL;
 	char path[CAP] = "./lib/";    
-
-    lib.readLibrary(inFile,fileName,path);
+	char version[CAP] = "4.0.1";
+	lib.readLibrary(inFile,fileName,path);
     
     while(true)
     {
         clear();
         printFile(fileName);
+	cout << "Wave v" << version << " testing branch" << endl;
         cout << "Size of Library: " << lib.getSize() << " Songs." << endl;
         menu();
         
