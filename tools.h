@@ -7,10 +7,10 @@ using namespace std;
 
 void menu();
 void clear();
-void printFile(char fileName[]);
+void printFile(char [], char []);
 void fixTime(int &, int &);
-bool error(istream &buffer);
-void handle(istream &buffer);
+bool error(istream &);
+void handle(istream &);
 void pause();
 
 #endif

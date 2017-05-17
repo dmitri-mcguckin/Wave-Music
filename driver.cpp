@@ -15,9 +15,8 @@ int main()
     while(true)
     {
         clear();
-        printFile(fileName);
-	cout << "Wave v" << version << " testing branch" << endl;
-        cout << "Size of Library: " << lib.getSize() << " Songs." << endl;
+        printFile(fileName,version);
+	cout << "Size of Library: " << lib.getSize() << " Songs." << endl;
         menu();
         
         cin >> option;
@@ -32,40 +31,40 @@ int main()
         {
         case 'A':
                 clear();
-                printFile(fileName);
+                printFile(fileName,version);
                 lib.addSong();
                 break;
         case 'L':
                 clear();
-                printFile(fileName);
+                printFile(fileName,version);
                 lib.getLibrary();
                 pause();
                 break;
         case 'E':
                 clear();
-                printFile(fileName);
+                printFile(fileName,version);
                 cout << "Feature is not yet available!" << endl;
                 pause();
                 break;
         case 'R':
                 clear();
-                printFile(fileName);
+                printFile(fileName,version);
                 lib.removeSong();
                 break;
         case 'S':
                 clear();
-                printFile(fileName);
+                printFile(fileName,version);
                 lib.searchLibrary();
                 break;
         case 'C':
                 clear();
-                printFile(fileName);
+                printFile(fileName,version);
                 cin.ignore();
                 lib.readLibrary(inFile,fileName,path);
                 break;
 	case 'Q':
         	clear();
-                printFile(fileName);
+                printFile(fileName,version);
                 lib.writeLibrary(outFile,fileName,path);
                 break;
             default:

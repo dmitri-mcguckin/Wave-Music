@@ -26,13 +26,15 @@ void clear()
 	#endif
 }
 
-void printFile(char fileName[])
+void printFile(char fileName[], char version[])
 {
-    int x = 40;
-    cout << setw(x) << setfill('-') << "-" << endl;
-    cout << setfill(' ') << "Current Selected File: " << fileName << endl;
-    cout << setw(x) << setfill('-') << "-" << endl;
-    cout << setfill(' ') << left << endl;
+	int x = 40;
+	cout << setw(x) << setfill('-') << "-" << endl;
+	cout << setfill(' ') << "Wave 4 Music Media Manager" << endl;
+	cout << "Version: " << version << " test branch" << endl; 
+	cout << "Current Selected File: " << fileName << endl;
+	cout << setw(x) << setfill('-') << "-" << endl;
+	cout << setfill(' ') << left << endl;
 }
 
 void fixTime(int &min, int &sec)
