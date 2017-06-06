@@ -1,127 +1,111 @@
 #include "song.h"
 
-// ---- Contructors
+// ----------------------------------------------------------------
+// |                        Constructors                          |
+// ----------------------------------------------------------------
 Song::Song()
 {
-	setLine(NULL,NULL,0,0,NULL);
+    title = new char[9];
+    strcpy(title,"No Title");
+    artist = new char[10];
+    strcpy(artist,"No Artist");
+    time.min = 0;
+    time.sec = 0;
+    album = new char[9];
+    strcpy(album,"No Album");
 }
 
-Song::Song(char tTitle[], char tArtist[], int min, int sec, char tAlbum[])
+Song::Song(char tTitle[], char tArtist[], int tMin, int tSec, char tAlbum[])
 {
-	setLine(tTitle,tArtist,min,sec,tAlbum);
+    title = new char[sizeof(tTitle) + 1];
+    strcpy(title,tTitle);
+    
+    artist = new char[sizeof(tArtist) + 1];
+    strcpy(artist,tArtist);
+    
+    time.min = tMin;
+    time.sec = tSec;
+    
+    album = new char[sizeof(tAlbum) + 1];
+    strcpy(album,tAlbum);
 }
 
-// ---- Destructor
+// ----------------------------------------------------------------
+// |                         Destructors                          |
+// ----------------------------------------------------------------    
 Song::~Song()
 {
-	//TODO: Nothing!
-	if(title)
-        delete [] title;
-	if(artist)
-        delete [] artist;
-	if(album)
-        delete [] album;
+    delete [] title;
+    title = NULL;
+    delete [] artist;
+    artist = NULL;
+    delete [] album;
+    album = NULL;
 }
 
-// ---- Accessors
-void Song::getTitle(char tTitle[])
+// ----------------------------------------------------------------
+// |                         Accessors                            |
+// ----------------------------------------------------------------
+
+void Song::getTitle()
 {
-    strcpy(tTitle,title);
+    cout << title;
 }
 
-void Song::getArtist(char tArtist[])
+void Song::getTitle(ostream & buffer)
 {
-    strcpy(tArtist,artist);
+    buffer << title;
 }
 
-void Song::getAlbum(char tAlbum[])
+void Song::getArtist()
 {
-    strcpy(tAlbum,album);
+    cout << artist;
 }
 
-int Song::getMin()
+void Song::getArtist(ostream & buffer)
 {
-    return time.minutes;
+    buffer << artist;
 }
 
-int Song::getSec()
+void Song::getAlbum()
 {
-    return time.seconds;
+    cout << album;
 }
 
-void Song::getLine()
+void Song::getAlbum(ostream & buffer)
 {
-    cout << left << setw(30) << title;
-    cout << left << setw(30) << artist;
-    int min = getMin();
-    int sec = getSec();
-    fixTime(min,sec);
-    setTime(min,sec);
-    cout << left << setw(30) << " " << album;
-    cout << endl;
+    buffer << album;
 }
 
-void Song::writeLine(ofstream &buffer)
+// ----------------------------------------------------------------
+// |                          Mutators                            |
+// ----------------------------------------------------------------
+
+
+// ----------------------------------------------------------------
+// |                          Operators                           |
+// ----------------------------------------------------------------
+ostream & operator << (ostream & buffer, Song & song)
 {
-    buffer << title << ";" << artist << ";" << time.minutes << ";" << time.seconds << ";" << album << endl;
+    buffer << song.title << ";" << song.artist << ";" << song.time.min << ";" << song.time.sec << ";" << song.album << endl;
+    
+    return buffer;
 }
 
-// ---- Mutators
-void Song::setTitle(char temp[])
+const Song & Song::operator = (const Song & song)
 {
-	if(title)
-    {
-		delete [] title;
-        title = NULL;
-    }
-	char *title = new char [strlen(temp) + 1];
-	strcpy(title,temp);
-}
-
-void Song::setArtist(char temp[])
-{
-	if(artist)
-    {
-		delete [] artist;
-        artist = NULL;
-    }
-	char *artist = new char [strlen(temp) + 1];
-	strcpy(artist,temp);
-}
-
-void Song::setTime(int min, int sec)
-{
-	time.minutes = min;
-	time.seconds = sec;
-}
-
-void Song::setAlbum(char temp[])
-{
-	if(album)
-    {
-		delete [] album;
-        album = NULL;
-    }
-	char *album = new char [strlen(temp) + 1];
-	strcpy(album,temp);
-}
-
-void Song::setLine(char temp1[], char temp2[], int min, int sec, char temp3[])
-{
-    setTitle(temp1);
-    setArtist(temp2);
-    setTime(min,sec);
-    setAlbum(temp3);
-}
-
-/*const Song &Song::operator = (const Song &list)
-{
-    if(this == &list)
+    if(this == &song)
     {
         return *this;
     }
     else
     {
-        setLine(list.title,list.);
+        strcpy(this->title,song.title);
+        strcpy(this->artist,song.artist);
+        this->time.min = song.time.min;
+        this->time.sec = song.time.sec;
+        strcpy(this->album,song.album);
+        
+        return *this;
     }
-}*/
+}

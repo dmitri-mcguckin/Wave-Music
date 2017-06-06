@@ -6,51 +6,44 @@
 #include <istream>
 #include <fstream>
 #include <string.h>
-#include "tools.h"
 
 using namespace std;
 
-const int CAP = 999;
+#include "tools.h"
 
 struct Time
 {
-	int minutes;
-	int seconds;
+    //int hour; // Maybe
+    int min;
+    int sec;
 };
 
 class Song
 {
-	private:
-		char *title;
-		char *artist;
-		Time time;
-		char *album;
-	public:
-		// Constructors
-		Song();
-		Song(char [], char [], int, int, char []);
-	
-		// Destructor
-		~Song(); 
-	
-		// Accessors
-        void getTitle(char []);
-        void getArtist(char []);
-        void getAlbum(char []);
-        int getMin();
-        int getSec();
-        void getLine();
-        void writeLine(ofstream &buffer);
-		
-		// Mutators	
-        void setTitle(char []);
-        void setArtist(char []);
-        void setTime(int, int);
-        void setAlbum(char []);
-        void setLine(char [], char [],int, int, char[]);
+    private:
+        char *title;
+        char *artist;
+        Time time;
+        char *album;
+    public:
+        // Constructors
+        Song();
+        Song(char tTitle[], char tArtist[], int tMin, int tSec, char tAlbum[]);
         
-        // Operators
-        //const Song &operator = (const Song &list);
+        // Destructors
+        ~Song();
+        
+        // Accessors
+        void getTitle();
+        void getTitle(ostream &);
+        void getArtist();
+        void getArtist(ostream &);
+        void getAlbum();
+        void getAlbum(ostream &);
+        
+        // Mutators
+        friend ostream &operator << (ostream &, Song &);
+        const Song & operator = (const Song &);
 };
 
 #endif

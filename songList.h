@@ -1,32 +1,34 @@
-#ifndef SONG_LIST_H
-#define SONG_LIST_H
+#ifndef SONGLIST_H
+#define SONGLIST_H
 
 #include "song.h"
 
+const int INCREASE = 100;
+const int CAP = 999;
+
 class SongList
 {
-	private:
-		int size;
-		Song *list;
-	public:
-		// Constructors	
-		SongList();	
-
-		// Destructor
-		~SongList();
-
-		// Accessors	
-		int getSize();
-		void getLibrary();
-        void searchLibrary();
-	    void readLibrary(ifstream &, char []);
+    private:
+        Song *list;
+        int size;
+        int capacity;
+        int increase;
+    public:
+        // Constructors
+        SongList();
+        SongList(char fileName[]);
         
+        // Destructors
+        ~SongList();
+        
+        // Accessors
+        void getLibrary();
+        void getLibrary(ostream & buffer);
+        void getSize();
         
         // Mutators
-		bool addSong();
-        bool removeSong();
-	    bool removeSong(int);
-	    void writeLibrary(ofstream &,char []);        
+        void addSong(char [], char [], int, int, char[]);
+        void growList();
 };
 
 #endif
