@@ -18,7 +18,7 @@ void clear()
 	#if defined(windows) || defined(__windows__) || defined(__windows)
         system("cls");
 	#elif defined(unix) || defined(__unix__) || defined(__unix)	
-        //system("clear");
+        system("clear");
 	#else
         cout << "Your operating system is not supported!" << endl;
         pause();
@@ -32,6 +32,28 @@ void printFile(char fileName[])
     cout << setfill(' ') << "Current Selected File: " << fileName << endl;
     cout << setw(x) << setfill('-') << "-" << endl;
     cout << setfill(' ') << left << endl;
+}
+
+void fixTime(int &min, int &sec)
+{
+        int addM;
+        int addS;
+
+        if(sec >= 60)
+        {
+                addM = sec / 60;
+                addS = sec % 60;
+
+                min += addM;
+                sec = addS;
+        }
+
+        cout << min << ":";
+
+        if(sec < 10)
+                cout << "0";
+
+        cout << sec;
 }
 
 bool error(istream &buffer)

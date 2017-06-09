@@ -1,9 +1,14 @@
 CC = g++
-EXE = Wave2
+EXE = Wave4
 
 all: driver.o song.o songList.o tools.o
 	$(CC) driver.o song.o songList.o tools.o -g -o $(EXE)
 	rm -f *.o
+
+e: driver.o song.o songList.o tools.o
+	$(CC) driver.o song.o songList.o tools.o -g -o $(EXE)
+	rm -f *.o
+	./$(EXE)
 
 driver.o:
 	$(CC) -g -c driver.cpp	

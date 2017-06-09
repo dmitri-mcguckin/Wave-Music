@@ -17,16 +17,16 @@ Song::Song()
 
 Song::Song(char tTitle[], char tArtist[], int tMin, int tSec, char tAlbum[])
 {
-    title = new char[sizeof(tTitle) + 1];
+    title = new char[strlen(tTitle) + 1];
     strcpy(title,tTitle);
     
-    artist = new char[sizeof(tArtist) + 1];
+    artist = new char[strlen(tArtist) + 1];
     strcpy(artist,tArtist);
     
     time.min = tMin;
     time.sec = tSec;
     
-    album = new char[sizeof(tAlbum) + 1];
+    album = new char[strlen(tAlbum) + 1];
     strcpy(album,tAlbum);
 }
 

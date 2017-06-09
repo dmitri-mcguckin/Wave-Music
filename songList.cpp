@@ -26,13 +26,11 @@ SongList::SongList(char fileName[])
     int tSec;
     char tAlbum[CAP];
     
-    clear();
-    printFile(fileName);
-    
     inFile.open(fileName);
    
     if(error(inFile))
     {
+	clear();
         handle(inFile);
         pause();
         cout << endl << "Wave will now forcefully exit!" << endl;
@@ -53,7 +51,6 @@ SongList::SongList(char fileName[])
         inFile.ignore();        
         inFile.get(tAlbum,CAP,'\n');
         
-        cout << "Info was retrieved!" << endl;
         addSong(tTitle,tArtist,tMin,tSec,tAlbum);
     }
     
@@ -85,7 +82,7 @@ void SongList::getLibrary()
     {
         for (int i = 0; i < size; i++)
         {
-            cout << list[i];
+            cout << list[i] << endl;
         }
     }
     else

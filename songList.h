@@ -3,7 +3,7 @@
 
 #include "song.h"
 
-const int INCREASE = 100;
+const int INCREASE = 1;
 const int CAP = 999;
 
 class SongList
