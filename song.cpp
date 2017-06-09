@@ -47,6 +47,11 @@ Song::~Song()
 // |                         Accessors                            |
 // ----------------------------------------------------------------
 
+void Song::getTitle(char temp[])
+{ 
+    strcpy(temp, title);
+}
+
 void Song::getTitle()
 {
     cout << title;
@@ -57,6 +62,11 @@ void Song::getTitle(ostream & buffer)
     buffer << title;
 }
 
+void Song::getArtist(char temp[])
+{
+    strcpy(temp, artist);
+}
+
 void Song::getArtist()
 {
     cout << artist;
@@ -65,6 +75,16 @@ void Song::getArtist()
 void Song::getArtist(ostream & buffer)
 {
     buffer << artist;
+}
+
+void Song::getTimeFormatted()
+{
+    fixTime(time.min,time.sec);
+}
+
+void Song::getAlbum(char temp[])
+{
+    strcpy(temp, album);
 }
 
 void Song::getAlbum()
@@ -87,7 +107,7 @@ void Song::getAlbum(ostream & buffer)
 // ----------------------------------------------------------------
 ostream & operator << (ostream & buffer, Song & song)
 {
-    buffer << song.title << ";" << song.artist << ";" << song.time.min << ";" << song.time.sec << ";" << song.album << endl;
+    buffer << song.title << ";" << song.artist << ";" << song.time.min << ";" << song.time.sec << ";" << song.album;
     
     return buffer;
 }

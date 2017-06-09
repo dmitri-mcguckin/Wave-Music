@@ -27,7 +27,7 @@ void clear()
 
 void printFile(char fileName[])
 {
-    int x = 40;
+    int x = 55;
     cout << setw(x) << setfill('-') << "-" << endl;
     cout << setfill(' ') << "Current Selected File: " << fileName << endl;
     cout << setw(x) << setfill('-') << "-" << endl;
@@ -48,11 +48,13 @@ void fixTime(int &min, int &sec)
                 sec = addS;
         }
 
+        cout << right << setw(3);
         cout << min << ":";
 
         if(sec < 10)
                 cout << "0";
 
+        cout << left << setw(4);
         cout << sec;
 }
 

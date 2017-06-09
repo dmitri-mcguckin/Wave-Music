@@ -4,54 +4,62 @@ int main()
 {
     char opt = NULL;
     char *version = "4.2.0";
-    char *fileName = "lib/wave_backup.dll";
+    char *fileName = "lib/wave.dll";
     
     clear();
     cout << "Welcome to Wave " << version << "!" << endl << "Please wait while we load some things!" << endl;
      
     SongList library(fileName);
-    system("sleep 2");  
-  
+    system("sleep 0.8");  
+    
     while(true)
     {
-	opt = NULL;
-        //clear();
+        opt = NULL;
+        clear();
         printFile(fileName);
         menu();
         cin >> opt;
 
-	switch(toupper(opt))
-	{
-		case 'A':
-			library.addSong("Dummy Track","Dummy Artist",9,99,"Dummy Album");
-			break;
-		case 'L':
-			cout << "Listing:" << endl;
-			library.getLibrary();
-			break;
-		case 'E':
-			cout << "This feature is not yet available!" << endl;
-			break;
-                case 'R':
-			cout << "Remove:" << endl;
-			break;
-                case 'S':
-			cout << "Search:" << endl;
-			break;
-                case 'C':
-			cout << "Change Lib:" << endl;
-			break;
-                case 'Q':
-			cout << "Good Bye!" << endl;
-			pause();
-			clear();
-			exit(0);
-			break;
-		default:
-			if(error(cin))
-				handle(cin);
-			break;
-	}
+        switch(toupper(opt))
+        {
+            case 'A':
+                printFile(fileName);
+                library.addSong();
+                break;
+            case 'L':
+                clear();
+                printFile(fileName);
+                library.getLibrary();
+                pause();
+                break;
+            case 'E':
+                clear();
+                printFile(fileName);
+                cout << "This feature is not yet available!" << endl;
+                pause();
+                break;
+            case 'R':
+                clear();
+                printFile(fileName);
+                library.removeSong();
+                break;
+            case 'S':
+                clear();
+                library.searchLibrary();    
+                break;
+            case 'C':
+                
+                break;
+            case 'Q':
+                clear();
+                library.writeLibrary(fileName);
+                break;
+            default:
+                cout << "Invalid input!" << endl;
+                handle(cin);
+                opt = NULL;   
+                break;
+        }
     }
     
     return 0;

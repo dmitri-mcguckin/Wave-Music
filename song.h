@@ -34,10 +34,14 @@ class Song
         ~Song();
         
         // Accessors
+        void getTitle(char []);
         void getTitle();
         void getTitle(ostream &);
+        void getArtist(char []);
         void getArtist();
         void getArtist(ostream &);
+        void getTimeFormatted();
+        void getAlbum(char []);
         void getAlbum();
         void getAlbum(ostream &);
         

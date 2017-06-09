@@ -3,7 +3,7 @@
 
 #include "song.h"
 
-const int INCREASE = 1;
+const int INCREASE = 50;
 const int CAP = 999;
 
 class SongList
@@ -24,11 +24,17 @@ class SongList
         // Accessors
         void getLibrary();
         void getLibrary(ostream & buffer);
+        void getSong(int);
         void getSize();
         
         // Mutators
+        void addSong();
         void addSong(char [], char [], int, int, char[]);
         void growList();
+        void searchLibrary();
+        void writeLibrary(char []);
+        void removeSong();
+        void removeSong(int);
 };
 
 #endif
