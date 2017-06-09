@@ -4,13 +4,12 @@ int main()
 {
     char opt = NULL;
     char *version = "4.2.0";
-    char *fileName = "lib/wave.dll";
+    char *fileName = new char[2];
     
     clear();
     cout << "Welcome to Wave " << version << "!" << endl << "Please wait while we load some things!" << endl;
      
     SongList library(fileName);
-    system("sleep 0.8");  
     
     while(true)
     {
@@ -45,13 +44,22 @@ int main()
                 break;
             case 'S':
                 clear();
+                printFile(fileName);
                 library.searchLibrary();    
                 break;
             case 'C':
-                
+                clear();
+                printFile(fileName);
+                cout << "This feature is not yet available!" << endl;
+                pause();
                 break;
+                /*clear();
+                printFile(fileName);
+                library = SongList(fileName);
+                break;*/
             case 'Q':
                 clear();
+                printFile(fileName);
                 library.writeLibrary(fileName);
                 break;
             default:

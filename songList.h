@@ -16,7 +16,7 @@ class SongList
     public:
         // Constructors
         SongList();
-        SongList(char fileName[]);
+        SongList(char *);
         
         // Destructors
         ~SongList();
@@ -32,7 +32,7 @@ class SongList
         void addSong(char [], char [], int, int, char[]);
         void growList();
         void searchLibrary();
-        void writeLibrary(char []);
+        void writeLibrary(char *);
         void removeSong();
         void removeSong(int);
 };

@@ -25,11 +25,11 @@ void clear()
 	#endif
 }
 
-void printFile(char fileName[])
+void printFile(char *fileName)
 {
-    int x = 55;
+    int x = 48;
     cout << setw(x) << setfill('-') << "-" << endl;
-    cout << setfill(' ') << "Current Selected File: " << fileName << endl;
+    cout << setw(x/2) << setfill(' ') << left << "Current Selected File: " << setw(x/2) << right << fileName << endl;
     cout << setw(x) << setfill('-') << "-" << endl;
     cout << setfill(' ') << left << endl;
 }

@@ -11,7 +11,7 @@ SongList::SongList()
     size = 0;
 }
 
-SongList::SongList(char fileName[])
+SongList::SongList(char *fileName)
 {
     capacity = INCREASE;
     
@@ -20,11 +20,23 @@ SongList::SongList(char fileName[])
     
     ifstream inFile;
         
+    char tName[CAP];
+    char dir[CAP] = "lib/";
     char tTitle[CAP];
     char tArtist[CAP];
     int tMin;
     int tSec;
     char tAlbum[CAP];
+    
+    cout << "Please enter file name: ";
+    cin.get(tName,CAP,'\n');
+    
+    strncat(dir,tName,CAP);
+    
+    if(fileName)
+        delete [] fileName;
+    fileName = new char[strlen(dir)];
+    strcpy(fileName,dir);
     
     inFile.open(fileName);
    
@@ -53,9 +65,6 @@ SongList::SongList(char fileName[])
         
         addSong(tTitle,tArtist,tMin,tSec,tAlbum);
     }
-    
-    //if(size > 0)
-    //removeSong(size);
     
     inFile.close();
 }
@@ -409,7 +418,7 @@ void SongList::searchLibrary()
     }
 }
 
-void SongList::writeLibrary(char fileName[])
+void SongList::writeLibrary(char *fileName)
 {
     char opt = NULL;
     char temp[CAP];
@@ -438,6 +447,7 @@ void SongList::writeLibrary(char fileName[])
                 getLibrary(outFile);
             
                 outFile.close();
+                delete [] fileName;
                 break;
             case 'N':
                 cout << endl << "Wave will not overwrite file!" << endl;
@@ -470,7 +480,6 @@ void SongList::removeSong()
         
         if(opt == -1)
         {
-            clear();
             cout << "Wave will not remove anything!" << endl;
             pause();
             return;
