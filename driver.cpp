@@ -3,7 +3,7 @@
 int main()
 {
     char opt = NULL;
-    char *version = "4.2.0";
+    char *version = "4.5.5";
     char *fileName = new char[2];
     
     clear();

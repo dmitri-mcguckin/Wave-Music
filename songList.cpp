@@ -4,18 +4,17 @@
 // |                        Constructors                          |
 // ----------------------------------------------------------------
 SongList::SongList()
-{
-    capacity = INCREASE;
-    
-    list = new Song[capacity];
+{    
+    head = NULL;
+    tail = NULL;
     size = 0;
+    head->data = Song();
 }
 
 SongList::SongList(char *fileName)
-{
-    capacity = INCREASE;
-    
-    list = new Song[capacity];
+{    
+    head = NULL;
+    tail = NULL;
     size = 0;
     
     ifstream inFile;
@@ -63,7 +62,7 @@ SongList::SongList(char *fileName)
         inFile.ignore();        
         inFile.get(tAlbum,CAP,'\n');
         
-        addSong(tTitle,tArtist,tMin,tSec,tAlbum);
+        insert(tTitle,tArtist,tMin,tSec,tAlbum);
     }
     
     inFile.close();
@@ -75,18 +74,16 @@ SongList::SongList(char *fileName)
 // ----------------------------------------------------------------    
 SongList::~SongList()
 {
-    if(list)
-    {
-        delete [] list;
-        list = NULL;
-    }
+
 }
 
 // ----------------------------------------------------------------
 // |                         Accessors                            |
 // ----------------------------------------------------------------
 void SongList::getLibrary()
-{    
+{   
+    Node * curr = head;
+    
     if(size != 0)
     {
         cout << "[N] ";
@@ -126,16 +123,18 @@ void SongList::getLibrary()
             }
             
             cout << left << setw(25);
-            list[i].getTitle();
+            curr->data.getTitle();
             cout << " ";
             cout << internal << setw(25);
-            list[i].getArtist();
+            curr->data.getArtist();
             cout << " ";
-            list[i].getTimeFormatted();
+            curr->data.getTimeFormatted();
             cout << " ";
             cout << internal << setw(20);
-            list[i].getAlbum();
+            curr->data.getAlbum();
             cout << endl;
+            
+            curr = curr->next;
         }
     }
     else
@@ -147,39 +146,43 @@ void SongList::getLibrary()
 void SongList::getLibrary(ostream & buffer)
 {
     char t[CAP];
+    Node *curr = head;
     
     if(size != 0)
     {
         for (int i = 0; i < size; i++)
         {
-            list[i].getTitle(t);
+            curr->data.getTitle(t);
             
             if(t)
-                buffer << list[i];
+                buffer << curr->data;
             if(!(i == (size - 1)))
                 buffer << endl;
+            curr = curr->next;
         }
     }
 }
 
 void SongList::getSong(int i)
 {
+    Node *curr = head;
+    
+    for(int j = 0; j < i; j++)
+    {
+        curr = curr->next;
+    }
+    
     cout << left << setw(25);
-    list[i].getTitle();
+    curr->data.getTitle();
     cout << " ";
     cout << right << setw(25);
-    list[i].getArtist();
+    curr->data.getArtist();
     cout << " ";
-    list[i].getTimeFormatted();
+    curr->data.getTimeFormatted();
     cout << " ";
     cout << left << setw(20);
-    list[i].getAlbum();
+    curr->data.getAlbum();
     cout << endl;
-}
-
-void SongList::getSize()
-{
-    cout << size;
 }
 
 // ----------------------------------------------------------------
@@ -233,7 +236,7 @@ void SongList::addSong()
 		switch(toupper(opt))
 		{
 			case 'Y': 
-			    list[size++] = Song(tTitle,tArtist,tMin,tSec,tAlbum);
+			    insert(tTitle,tArtist,tMin,tSec,tAlbum);
 				
 				cout << "Song added!" << endl;
 				return;
@@ -251,14 +254,50 @@ void SongList::addSong()
 
 }
 
-void SongList::addSong(char tTitle[], char tArtist[], int tMin, int tSec, char tAlbum[])
+void SongList::insert(char tTitle[], char tArtist[], int tMin, int tSec, char tAlbum[])
 {    
-    list[size++] = Song(tTitle,tArtist,tMin,tSec,tAlbum);
+    Node * temp = new Node;
+    Node * curr = head;
+    
+    temp->data = Song(tTitle,tArtist,tMin,tSec,tAlbum);
+    temp->next = NULL;
+    temp->prev = NULL;
+    
+    
+	while(curr)
+	{
+		if(curr->next)
+			curr = curr->next;
+		else
+			break;
+	}
+    
+    if(!head)
+    {
+        head = temp;
+        tail = head;
+        size++;
+    }
+    else if(curr == tail)
+    {
+        curr->next = temp;
+        temp->prev = curr;
+        tail = temp;
+        size++;
+    }
+    else
+    {
+        temp->next = curr->next;
+        curr->next = temp;
+        temp->next->prev = temp;
+        temp->prev = curr;
+        size++;
+    }
 }
 
 void SongList::searchLibrary()
 {
-    int opt = NULL, res = 0;
+/*    int opt = NULL, res = 0;
     char search[CAP], tTitle[CAP], tArtist[CAP], tAlbum[CAP];
     
     if(size == 0)
@@ -391,12 +430,12 @@ void SongList::searchLibrary()
            cout << "Invalid option!" << endl;
             pause();
             break;
-    }
+    }*/
 }
 
 void SongList::writeLibrary(char *fileName)
 {
-    char opt = NULL;
+    /*char opt = NULL;
     char temp[CAP];
     ofstream outFile;
     
@@ -439,7 +478,7 @@ void SongList::writeLibrary(char *fileName)
     cout << "Goodbye!" << endl;
     pause();
     clear();
-    exit(0);
+    exit(0);*/
 }
 
 void SongList::removeSong()
@@ -491,12 +530,8 @@ void SongList::removeSong()
             switch(toupper(rep))
             {
                 case 'Y':
-                    for(int i = opt; i < size; i++)
-                    {
-                        list[i] = list[i + 1];
-                    }
-                    
-                    size--;
+                    cout << opt << endl;
+                    remove(opt);
                     
                     cout << endl << "Song was removed!" << endl;
                     pause();
@@ -513,14 +548,47 @@ void SongList::removeSong()
             }
         }   
     }
-    
 }
 
-void SongList::removeSong(int opt)
+void SongList::remove(int i)
 {
-    for(int i = opt; i < (size - 1); i++)
+    Node *curr = head;
+    
+    for(int j = 0; j < i; j++)
     {
-        list[i] = list[i + 1];
+        curr = curr->next;
+    }
+    
+    if(curr == head)
+    {
+        head = curr->next;
+        if(head)
+            head->prev = NULL;
+        curr->next = NULL;
+        delete curr;
+        curr = NULL;
+        if(!head)
+            tail = NULL;
+    }
+    else if (curr == tail)
+    {
+        tail = curr->prev;
+        if(tail)
+            tail->next = NULL;
+        curr->prev = NULL;
+        delete curr;
+        curr = NULL;
+        if(!tail)
+            head = NULL;
+    }
+    else
+    {
+        curr->prev->next = curr->next;
+        curr->next->prev = curr->prev;
+        curr->next = NULL;
+        curr->prev = NULL;
+        delete curr;
+        curr = NULL;
     }
     
     size--;

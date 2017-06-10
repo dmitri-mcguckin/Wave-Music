@@ -3,13 +3,20 @@
 
 #include "song.h"
 
-const int INCREASE = 50;
 const int CAP = 999;
+
+struct Node
+{
+    Song data;
+    Node * next;
+    Node * prev;
+};
 
 class SongList
 {
     private:
-        Song *list;
+        Node * head;
+        Node * tail;
         int size;
         int capacity;
         int increase;
@@ -25,15 +32,14 @@ class SongList
         void getLibrary();
         void getLibrary(ostream & buffer);
         void getSong(int);
-        void getSize();
         
         // Mutators
         void addSong();
-        void addSong(char [], char [], int, int, char[]);
+        void insert(char [], char [], int, int, char[]);
         void searchLibrary();
         void writeLibrary(char *);
         void removeSong();
-        void removeSong(int);
+        void remove(int);
 };
 
 #endif
