@@ -196,9 +196,6 @@ void SongList::addSong()
 	char opt = NULL;	
 
 	clear();
-
-	if(size == (capacity - 1))
-        growList();
 	
 	cout << "Adding a new song!" << endl;
 	cin.ignore(CAP,'\n');
@@ -255,29 +252,8 @@ void SongList::addSong()
 }
 
 void SongList::addSong(char tTitle[], char tArtist[], int tMin, int tSec, char tAlbum[])
-{
-    if(size == (capacity - 1))
-        growList();
-    
+{    
     list[size++] = Song(tTitle,tArtist,tMin,tSec,tAlbum);
-}
-
-void SongList::growList()
-{
-    capacity += INCREASE;
-    
-    Song *temp = new Song[capacity];
-    
-    for(int i = 0; i < size; i++)
-    {
-        temp[i] = list[i];
-    }
-    
-    delete [] list;
-    
-    list = temp;
-    
-    temp = NULL;
 }
 
 void SongList::searchLibrary()

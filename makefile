@@ -1,5 +1,5 @@
 CC = g++
-EXE = Wave4
+EXE = Wave5
 
 all: driver.o song.o songList.o tools.o
 	$(CC) driver.o song.o songList.o tools.o -g -o $(EXE)

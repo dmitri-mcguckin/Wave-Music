@@ -30,7 +30,6 @@ class SongList
         // Mutators
         void addSong();
         void addSong(char [], char [], int, int, char[]);
-        void growList();
         void searchLibrary();
         void writeLibrary(char *);
         void removeSong();
