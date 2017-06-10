@@ -63,6 +63,9 @@ SongList::SongList(char *fileName)
         inFile.get(tAlbum,CAP,'\n');
         
         insert(tTitle,tArtist,tMin,tSec,tAlbum);
+        
+        cout << endl;
+        getLibrary();
     }
     
     inFile.close();
@@ -74,7 +77,8 @@ SongList::SongList(char *fileName)
 // ----------------------------------------------------------------    
 SongList::~SongList()
 {
-
+    for(int i = 0; i < size; i++)
+        remove(i);
 }
 
 // ----------------------------------------------------------------
@@ -172,7 +176,7 @@ void SongList::getSong(int i)
         curr = curr->next;
     }
     
-    cout << left << setw(25);
+    cout << right << setw(25);
     curr->data.getTitle();
     cout << " ";
     cout << right << setw(25);
@@ -256,21 +260,11 @@ void SongList::addSong()
 
 void SongList::insert(char tTitle[], char tArtist[], int tMin, int tSec, char tAlbum[])
 {    
-    Node * temp = new Node;
     Node * curr = head;
-    
+    Node * temp = new Node;
     temp->data = Song(tTitle,tArtist,tMin,tSec,tAlbum);
     temp->next = NULL;
     temp->prev = NULL;
-    
-    
-	while(curr)
-	{
-		if(curr->next)
-			curr = curr->next;
-		else
-			break;
-	}
     
     if(!head)
     {
@@ -278,27 +272,55 @@ void SongList::insert(char tTitle[], char tArtist[], int tMin, int tSec, char tA
         tail = head;
         size++;
     }
-    else if(curr == tail)
-    {
-        curr->next = temp;
-        temp->prev = curr;
-        tail = temp;
-        size++;
-    }
     else
     {
-        temp->next = curr->next;
-        curr->next = temp;
-        temp->next->prev = temp;
-        temp->prev = curr;
-        size++;
+        char c1[CAP], c2[CAP];
+        curr->data.getTitle(c1);
+        temp->data.getTitle(c2);
+        
+        cout << c1 << endl << c2 << endl << (strcmp(c1,c2) < 0) << endl;
+        
+        while (curr)
+        {
+            if(curr->next && strcmp(c1,c2) < 0)
+                curr = curr->next;
+            else
+                break;
+            
+            if(curr)
+                curr->data.getTitle(c1);
+        }
+        
+        if(curr->prev == NULL && strcmp(c1,c2) > 0)
+        {
+            temp->next = head;
+            head->prev = temp;
+            head = temp;
+            size++;
+        }
+        else if(curr->next == NULL && strcmp(c1,c2) < 0)
+        {
+            temp->prev = tail;
+            tail->next = temp;
+            tail = temp;
+            size++;
+        }
+        else
+        {
+            temp->next = curr;
+            temp->prev = curr->prev;
+            curr->prev->next = temp;
+            curr->prev = temp;
+            size++;
+        }
     }
 }
 
 void SongList::searchLibrary()
 {
-/*    int opt = NULL, res = 0;
+    int opt = NULL, res = 0;
     char search[CAP], tTitle[CAP], tArtist[CAP], tAlbum[CAP];
+    Node *curr = head;
     
     if(size == 0)
     {
@@ -356,12 +378,13 @@ void SongList::searchLibrary()
             cout << endl;
             for(int i = 0; i < size; i++)
             {
-                list[i].getTitle(tTitle);
+                curr->data.getTitle(tTitle);
                 if(strcasestr(tTitle,search))
                 {
                     getSong(i);
                     res++;
                 }
+                curr = curr->next;
             }
             
             cout << "A total of " << res << " song(s) were found." << endl;
@@ -385,12 +408,13 @@ void SongList::searchLibrary()
             cout << endl;
             for(int i = 0; i < size; i++)
             {
-                list[i].getArtist(tArtist);
+                curr->data.getArtist(tArtist);
                 if(strcasestr(tArtist,search))
                 {
                     getSong(i);
                     res++;
                 }
+                curr = curr->next;
             }
             
             cout << "A total of " << res << " song(s) were found." << endl;
@@ -414,12 +438,13 @@ void SongList::searchLibrary()
             cout << endl;
             for(int i = 0; i < size; i++)
             {
-                list[i].getAlbum(tAlbum);
+                curr->data.getAlbum(tAlbum);
                 if(strcasestr(tAlbum,search))
                 {
                     getSong(i);
                     res++;
                 }
+                curr = curr->next;
             }
             
             cout << endl << "A total of " << res << " song(s) were found." << endl;
@@ -430,12 +455,12 @@ void SongList::searchLibrary()
            cout << "Invalid option!" << endl;
             pause();
             break;
-    }*/
+    }
 }
 
 void SongList::writeLibrary(char *fileName)
 {
-    /*char opt = NULL;
+    char opt = NULL;
     char temp[CAP];
     ofstream outFile;
     
@@ -478,7 +503,7 @@ void SongList::writeLibrary(char *fileName)
     cout << "Goodbye!" << endl;
     pause();
     clear();
-    exit(0);*/
+    exit(0);
 }
 
 void SongList::removeSong()

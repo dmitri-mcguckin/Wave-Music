@@ -21,10 +21,10 @@ struct Time
 class Song
 {
     private:
-        char *title;
-        char *artist;
+        char * title;
+        char * artist;
         Time time;
-        char *album;
+        char * album;
     public:
         // Constructors
         Song();

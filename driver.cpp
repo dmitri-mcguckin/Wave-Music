@@ -7,8 +7,8 @@ int main()
     char *fileName = new char[2];
     
     clear();
-    cout << "Welcome to Wave " << version << "!" << endl << "Please wait while we load some things!" << endl;
-     
+    cout << "Welcome to Wave " << version << "!" << endl << "Please wait while we load some things!" << endl;    
+    
     SongList library(fileName);
     
     while(true)
@@ -53,10 +53,6 @@ int main()
                 cout << "This feature is not yet available!" << endl;
                 pause();
                 break;
-                /*clear();
-                printFile(fileName);
-                library = SongList(fileName);
-                break;*/
             case 'Q':
                 clear();
                 printFile(fileName);
